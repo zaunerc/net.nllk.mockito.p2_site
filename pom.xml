@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001 XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.nllk</groupId>
+	<artifactId>net.nllk.mockito.p2_site</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.0</version>
+
+	<properties>
+		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+		
+		<!-- Use for SNAPSHOT builds -->
+		<!-- <qualifier>dev-${maven.build.timestamp}-nllk</qualifier> -->
+		<!-- Use for release builds -->
+		<qualifier>rel-v${project.version}-nllk</qualifier>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.reficio</groupId>
+				<artifactId>p2-maven-plugin</artifactId>
+				<version>1.2.0-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<id>org.mockito:mockito-core:jar:1.10.19</id>
+									<override>true</override>
+									<instructions>
+										<Bundle-Version>1.10.19.${qualifier}</Bundle-Version>
+									</instructions>
+									<!-- We want to use the latest  hamcrest-core version. JUnit 4.12
+									requires at least version 1.3. -->
+							        <excludes>
+            							<exclude>org.hamcrest:hamcrest-core:jar:1.1</exclude>
+							        </excludes>
+									<source>true</source>
+								</artifact>
+								<artifact>
+									<id>org.hamcrest:hamcrest-core:jar:1.3</id>
+									<override>true</override>
+									<instructions>
+										<Bundle-Version>1.3.0.${qualifier}</Bundle-Version>
+									</instructions>
+									<source>true</source>
+								</artifact>
+								<artifact>
+									<id>org.objenesis:objenesis:jar:2.1</id>
+									<override>true</override>
+									<instructions>
+										<Bundle-Version>2.1.0.${qualifier}</Bundle-Version>
+									</instructions>
+									<source>true</source>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>reficio</id>
+			<url>http://repo.reficio.org/maven/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+</project>
+
